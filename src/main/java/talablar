@@ -1,0 +1,45 @@
+
+1) User - foydalanuvchilar:
+    # Tizimga yangi foydalanuvchi registratsiya qila olishi kerak.
+        * Bunda undan Name,Surname, Phone, Password so'raladi. (passwordni takror kiritish ham bo'lishi kerak.)
+            Phone number valid bo'lishi kerak.
+            Password kamida 5 harf bo'lsin. Kamida 1kichik va 1ta katta harf bo'lsin.
+            SMS code orqali phone shu userga tegishli ekanligini aniqlang.
+            sms 5 xonali son.
+            ketgan sms 1 minut ichida  ishlatish kerak. Agar 1 minut dan oshsa  sms qayta jo'natilsin.
+            Registration da user oddiy CLIENT role ga ega bo'ladi.
+        * Har bitta User authorization dan o'tib sistemaga kira olishi kerak.
+            Agar User passwordni esidan chiqargan bo'lsa uni o'zgartirish imkoni bo'lishi kerak.
+        * User Authorization dan o'tganidan keyin unga tegishli Menu lar ko'rsansin.
+        * Agar Authorization dan o'tgan user ADMIN rolega  ega bo'lsa unga qo'shimcha menu lar ko'rsansin.
+          Admin qo'shimcha menuda  User larni ko'rishi mumkin, ularni blocklar yoki active qilishi mumkin.
+          User lardagi cartalarni ko'rishi mumkin (balanslari bilan birga).
+
+2) SMS
+    * Sistemadan ketayotgan barcha sms larni ADMIN lar ko'rib turish kerak.
+      Yani kimga, qachon qanday sms ketdi va u nima uchun ishlatilid
+3) Card
+4) Company
+
+
+** Main Menu
+1. LogIn
+2. Registration
+3. Currency
+0. Exit
+
+
+CRUD
+Foydalanuvchi lar, (physical)
+Registration,Authorization
+Carta (UzCard,Humo,Visa),
+Pul o'tkazmalari (kartadan-kartaga),
+Foizlar,
+Merchant(Beeline,Ucel,,,UzMobile,UzOnline,Turon,Sarkor)
+Physical payment to Company,
+Transaction(History)
+Valuta ayir boshlash kurslari.
+MD5 hashing
+
+
+
