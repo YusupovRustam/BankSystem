@@ -1,11 +1,9 @@
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(localDateTime);
-        //2021-12-11
 
         Scanner scanner = new Scanner(System.in);
         BankSystem bankSystem = new BankSystem();
@@ -14,9 +12,10 @@ public class Main {
             int i = scanner.nextInt();
             switch (i) {
                 case 1:
+                    bankSystem.start(1);
                     break;
                 case 2:
-                    bankSystem.start();
+                    bankSystem.start(2);
                     break;
                 case 3:
                     break;
