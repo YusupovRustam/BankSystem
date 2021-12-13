@@ -6,13 +6,14 @@ import java.util.Scanner;
 public class BankSystem {
     Scanner scanner = new Scanner(System.in);
     ConnectionJDBC connectionJDBC = new ConnectionJDBC();
+    CardConnectionDB cardConnectionDB=new CardConnectionDB();
 
     public void start(int i) {
         while (true){
             switch (i){
                 case 1:
                    login();
-                 int a=Consule.getNumber("1.Davom etish uchun\n2.Asosiy Menu uchun");
+                 int a= Console.getNumber("1.Davom etish uchun\n2.Asosiy Menu uchun");
                  if (a==2){
                      return;
                  }
@@ -20,12 +21,13 @@ public class BankSystem {
 
                 case 2:
                     registration();
-                    int b=Consule.getNumber("1.Davom etish uchun\n2.Asosiy Menu uchun");
+                    int b= Console.getNumber("1.Davom etish uchun\n2.Asosiy Menu uchun");
                     if (b==2){
                         return;
                     }
                     break;
                 case 3:
+
                     break;
                 case 4:
                     break;
@@ -37,11 +39,11 @@ public class BankSystem {
     public void registration() {
         System.out.println("====Registration====");
         do {
-            String name = Consule.getmassage("ismingizni kiriting");
-            String surname = Consule.getmassage("familyangizni kiriting");
-            Integer phone = Consule.getNumber("Telni kiriting");
-            String password = Consule.getmassage("Password ni kiriting\nDiqqat!!!\npassword uzunligi 5 bolsin va kamida 1ta son,1ta kichik harf va 1ta katta harf bolsin ");
-            String password1 = Consule.getmassage("Password ni tasdiqlang");
+            String name = Console.getmassage("ismingizni kiriting");
+            String surname = Console.getmassage("familyangizni kiriting");
+            Integer phone = Console.getNumber("Telni kiriting");
+            String password = Console.getmassage("Password ni kiriting\nDiqqat!!!\npassword uzunligi 5 bolsin va kamida 1ta son,1ta kichik harf va 1ta katta harf bolsin ");
+            String password1 = Console.getmassage("Password ni tasdiqlang");
             if (password.equals(password1) && Checking.checkPassword(password)) {
                 do {
                     LocalDateTime localDateTime = LocalDateTime.now();
@@ -88,13 +90,13 @@ public class BankSystem {
     }
 
     public void login(){
-        String password=Consule.getmassage("Passwordni kiriting \n Agar passwordni unutgan bolsangiz Telni kiriting ");
+        String password= Console.getmassage("Passwordni kiriting \n Agar passwordni unutgan bolsangiz Telni kiriting ");
         try {
             int a=Integer.parseInt(password);
             User user=connectionJDBC.getUser(a);
            if (user!=null){
-               String newPassword = Consule.getmassage(" yangi Password ni kiriting\nDiqqat!!!\npassword uzunligi 5 bolsin va kamida 1ta son,1ta kichik harf va 1ta katta harf bolsin ");
-               String newPassword1 = Consule.getmassage("Password ni tasdiqlang");
+               String newPassword = Console.getmassage(" yangi Password ni kiriting\nDiqqat!!!\npassword uzunligi 5 bolsin va kamida 1ta son,1ta kichik harf va 1ta katta harf bolsin ");
+               String newPassword1 = Console.getmassage("Password ni tasdiqlang");
                if (newPassword.equals(newPassword1) && Checking.checkPassword(newPassword)) {
                    do {
                        LocalDateTime localDateTime = LocalDateTime.now();
@@ -125,8 +127,38 @@ public class BankSystem {
         }catch (RuntimeException e){
                User user1=connectionJDBC.getUser(password);
                if (user1!=null){
+                   do{
                    cardMenu();
-                   int i=Consule.getNumber("Biror raqamni tanlang");
+                   int i= Console.getNumber("Biror raqamni tanlang");
+                   switch (i){
+                       case 1:
+                           createCard(user1.getId());
+                           break;
+                       case 2:
+                           int parol= Console.getNumber("Enter card parol");
+                           long balance = cardConnectionDB.balance(parol,user1.getId());
+                           System.out.println(balance);
+                           break;
+                       case 3:
+                           int parol1= Console.getNumber("Enter card parol");
+                           long cardraqam= Console.getLong("Card raqamni kiriting");
+                           long money= Console.getLong("Enter money");
+                           cardConnectionDB.transaction(user1.getId(),parol1,cardraqam,money);
+                           break;
+                       case 4:
+                           pay();
+                           break;
+                       case 5:
+                           int parol2=Console.getNumber("Card Parolni kiriting");
+                           if (parol2== user1.getId()){
+                               cardConnectionDB.history(parol2);
+                           }else {
+                               System.out.println("parol xato!!!!!!!!!!!!");
+                           }
+                           break;
+                       case 6:
+                          return;
+                   }}while (true);
 
                }
 
@@ -138,7 +170,43 @@ public class BankSystem {
         System.out.println("2.Card balane");
         System.out.println("3.Transaction");
         System.out.println("4.Tolovlar");
-        System.out.println("5.exit");
+        System.out.println("5.history");
+        System.out.println("6.exit");
+    }
+
+    public void createCard(int userId){
+        System.out.println("===Card Create===");
+        String name= Console.getmassage("Enter card name");
+        long cardnumber= Console.getLong("enter card number");
+        int cardparol= Console.getNumber("enter card parol");
+        long cardBalans= Console.getLong("enter card balans");
+        Card card=new Card(userId,name,cardnumber,cardparol,cardBalans);
+        LocalDateTime localDateTime=LocalDateTime.now();
+        card.setLocalDateTime(localDateTime);
+        cardConnectionDB.savaCard(card);
+
+    }
+    public void pay(){
+         while (true){
+             payMenu();
+              int i= Console.getNumber("biror raqamni tanlang!!!");
+              switch (i){
+                  case 1:
+                      System.out.println("beeline");
+                      break;
+                  case 2:
+                      System.out.println("Ucell");
+                      break;
+                  case 3:
+                      return;
+              }
+         }
+    }
+
+    public void payMenu(){
+        //Beeline,Ucel,,,UzMobile,UzOnline,Turon,Sarkor;
+        System.out.println("1.Beeline");
+        System.out.println("2.Ucell");
     }
 }
 

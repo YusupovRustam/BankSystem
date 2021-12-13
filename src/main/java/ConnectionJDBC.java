@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
@@ -151,6 +152,14 @@ public class ConnectionJDBC {
                  e.printStackTrace();
              }
     }
+
+//USERID
+//NAME
+//CARDNUMBER
+//CARDPAROL
+//BALANCE
+    //CREATEDATES
+
 
 
 }

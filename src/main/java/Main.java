@@ -1,15 +1,9 @@
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
         BankSystem bankSystem = new BankSystem();
         while (true) {
             menu();
-            int i = scanner.nextInt();
+            int i = Console.getNumber("====Menu====");
             switch (i) {
                 case 1:
                     bankSystem.start(1);
@@ -20,7 +14,7 @@ public class Main {
                 case 3:
                     break;
                 case 0:
-                    break;
+                    return;
 
             }
         }
@@ -28,7 +22,6 @@ public class Main {
 
 
     public static void menu() {
-        System.out.println("====Menu====");
         System.out.println("1.Login");
         System.out.println("2.Registration");
         System.out.println("3.Currency");
